@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INTASIA CLIENTS - Digital Marketing Client Tracker</title>
+  <!-- Google Fonts: Outfit (headings) and Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="logo-container">
+        <!-- Modern Grid/Node CRM SVG Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="logo-icon">
+          <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+          <path d="M12 6v12M6 12h12"/>
+          <circle cx="12" cy="12" r="3" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="header-titles">
+        <h1 class="logo-text">INTASIA CLIENTS</h1>
+        <span class="logo-subtext">BUSINESS INTELLIGENCE CRM</span>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <div class="search-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="global-search" placeholder="Search clients, business type, phone, notes..." autocomplete="off">
+      </div>
+    </div>
+
+    <div class="header-right">
+      <button id="toggle-filter-btn" class="btn btn-secondary" title="Toggle Filters">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
+          <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+        </svg>
+        <span>Filters</span>
+      </button>
+
+      <div class="csv-actions">
+        <button id="export-csv-btn" class="btn btn-secondary" title="Export to CSV">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Export</span>
+        </button>
+
+        <label for="import-csv-file" class="btn btn-secondary btn-file-label" title="Import from CSV">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          <span>Import</span>
+          <input type="file" id="import-csv-file" accept=".csv" style="display: none;">
+        </label>
+      </div>
+
+      <button id="add-client-btn" class="btn btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        <span>Add Client</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Collapsible Filter Panel -->
+  <section id="filter-panel" class="filter-panel hidden">
+    <div class="filter-grid">
+      <div class="filter-group">
+        <label for="filter-website">Website Status</label>
+        <select id="filter-website">
+          <option value="">All Statuses</option>
+          <option value="No Website">No Website</option>
+          <option value="Poor Website">Poor Website</option>
+          <option value="Average Website">Average Website</option>
+          <option value="Good Website">Good Website</option>
+          <option value="Excellent Website">Excellent Website</option>
+          <option value="Ecommerce Website">Ecommerce Website</option>
+          <option value="Poor Ecommerce Website">Poor Ecommerce Website</option>
+          <option value="Website Not Working">Website Not Working</option>
+          <option value="Slow Website">Slow Website</option>
+          <option value="Outdated Design">Outdated Design</option>
+          <option value="No Mobile Optimization">No Mobile Optimization</option>
+          <option value="SEO Issues">SEO Issues</option>
+          <option value="Broken Links">Broken Links</option>
+          <option value="Needs Redesign">Needs Redesign</option>
+          <option value="Needs Speed Optimization">Needs Speed Optimization</option>
+          <option value="Needs SEO">Needs SEO</option>
+          <option value="Landing Page Missing">Landing Page Missing</option>
+          <option value="High Bounce Rate">High Bounce Rate</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="filter-social">Social Media Status</label>
+        <select id="filter-social">
+          <option value="">All Statuses</option>
+          <option value="No Presence">No Presence</option>
+          <option value="Poor Presence">Poor Presence</option>
+          <option value="Average Presence">Average Presence</option>
+          <option value="Good Presence">Good Presence</option>
+          <option value="Excellent Presence">Excellent Presence</option>
+          <option value="Less Followers">Less Followers</option>
+          <option value="Many Posts Few Followers">Many Posts Few Followers</option>
+          <option value="Inactive Page">Inactive Page</option>
+          <option value="No Engagement">No Engagement</option>
+          <option value="Low Engagement">Low Engagement</option>
+          <option value="Good Engagement">Good Engagement</option>
+          <option value="No Branding">No Branding</option>
+          <option value="Poor Branding">Poor Branding</option>
+          <option value="Needs Content Strategy">Needs Content Strategy</option>
+          <option value="Needs Reels">Needs Reels</option>
+          <option value="Needs Ads">Needs Ads</option>
+          <option value="Needs Community Building">Needs Community Building</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="filter-lead">Lead Status</label>
+        <select id="filter-lead">
+          <option value="">All Statuses</option>
+          <option value="Cold Lead">Cold Lead</option>
+          <option value="Warm Lead">Warm Lead</option>
+          <option value="Hot Lead">Hot Lead</option>
+          <option value="Interested">Interested</option>
+          <option value="Follow Up Needed">Follow Up Needed</option>
+          <option value="Meeting Scheduled">Meeting Scheduled</option>
+          <option value="Proposal Sent">Proposal Sent</option>
+          <option value="Negotiation">Negotiation</option>
+          <option value="Client Won">Client Won</option>
+          <option value="Client Lost">Client Lost</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label for="filter-business-type">Business Type</label>
+        <input type="text" id="filter-business-type" placeholder="e.g. Agency, Dental, Retail">
+      </div>
+
+      <div class="filter-group">
+        <label>Date Added Range</label>
+        <div class="date-range-inputs">
+          <input type="date" id="filter-date-start" placeholder="From">
+          <input type="date" id="filter-date-end" placeholder="To">
+        </div>
+      </div>
+    </div>
+    <div class="filter-actions">
+      <button id="clear-filters-btn" class="btn btn-secondary-outline">Clear Filters</button>
+      <button id="apply-filters-btn" class="btn btn-accent">Apply Filters</button>
+    </div>
+  </section>
+
+  <main class="app-layout">
+    <!-- Left Column: Stats Dashboard & Client Table -->
+    <div class="main-content-flow">
+      
+      <!-- Overdue Follow-ups Notification Bar -->
+      <div id="followup-alert-banner" class="followup-alert-banner hidden">
+        <div class="alert-content">
+          <span class="alert-badge overdue-badge">Overdue</span>
+          <span id="followup-alert-text">You have 0 overdue client follow-ups.</span>
+        </div>
+        <button id="close-alert-btn" class="close-alert-btn">&times;</button>
+      </div>
+
+      <!-- Dashboard Stats Panel -->
+      <section class="stats-panel">
+        <div class="stat-card" data-stat="total">
+          <div class="stat-details">
+            <span class="stat-label">Total Clients</span>
+            <h3 class="stat-number" id="stat-total-clients">0</h3>
+            <span class="stat-trend">Total in Database</span>
+          </div>
+          <div class="stat-icon-container">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stat-icon">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+        </div>
+
+        <div class="stat-card" data-stat="cold">
+          <div class="stat-details">
+            <span class="stat-label">Cold Leads</span>
+            <h3 class="stat-number" id="stat-cold-leads">0</h3>
+            <span class="stat-trend color-cold">Outreach Queue</span>
+          </div>
+          <div class="stat-icon-container">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stat-icon">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </div>
+        </div>
+
+        <div class="stat-card" data-stat="warm">
+          <div class="stat-details">
+            <span class="stat-label">Warm Leads</span>
+            <h3 class="stat-number" id="stat-warm-leads">0</h3>
+            <span class="stat-trend color-warm">Actively Nurturing</span>
+          </div>
+          <div class="stat-icon-container">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stat-icon">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+        </div>
+
+        <div class="stat-card" data-stat="hot">
+          <div class="stat-details">
+            <span class="stat-label">Hot Leads</span>
+            <h3 class="stat-number" id="stat-hot-leads">0</h3>
+            <span class="stat-trend color-hot">High Conversion Chance</span>
+          </div>
+          <div class="stat-icon-container">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stat-icon">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+            </svg>
+          </div>
+        </div>
+
+        <div class="stat-card" data-stat="no-website">
+          <div class="stat-details">
+            <span class="stat-label">No Website</span>
+            <h3 class="stat-number" id="stat-no-website">0</h3>
+            <span class="stat-trend color-no-web">Dev Target Deals</span>
+          </div>
+          <div class="stat-icon-container">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stat-icon">
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+              <path d="M21 16V8a2 2 0 0 0-2-2H9.5a1 1 0 0 0-1 1v1M4 4h0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V16"></path>
+              <line x1="12" y1="18" x2="12.01" y2="18"></line>
+            </svg>
+          </div>
+        </div>
+
+        <div class="stat-card" data-stat="poor-social">
+          <div class="stat-details">
+            <span class="stat-label">Poor Social Media</span>
+            <h3 class="stat-number" id="stat-poor-social">0</h3>
+            <span class="stat-trend color-poor-social">SMM Pitch List</span>
+          </div>
+          <div class="stat-icon-container">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stat-icon">
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <path d="M17.5 6.5h.01"></path>
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- Table Section -->
+      <section class="database-section">
+        <!-- View Title / Active Filters summary -->
+        <div class="table-meta">
+          <div class="table-title-group">
+            <h2 id="view-title">Active Database</h2>
+            <span class="badge" id="visible-count-badge">0 visible</span>
+          </div>
+          <div id="active-filters-tags" class="active-filters-tags">
+            <!-- Dynamically populated tags here -->
+          </div>
+        </div>
+
+        <!-- Desktop Grid/Table View -->
+        <div class="table-scroll-container">
+          <table class="client-table" id="client-table-element">
+            <thead>
+              <tr>
+                <th>Client Name</th>
+                <th>Website Status</th>
+                <th>Social Media Status</th>
+                <th>Contact Details</th>
+                <th>Lead Status</th>
+                <th>Last Follow-up</th>
+                <th>Priority</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="client-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Mobile Cards Container -->
+        <div class="client-cards-grid" id="client-cards-grid">
+          <!-- Dynamically populated card blocks on mobile viewports -->
+        </div>
+
+        <!-- Empty State Block -->
+        <div class="empty-state" id="empty-state-panel">
+          <div class="empty-illustration">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <h3>No clients added yet</h3>
+          <p>Start building your database by adding clients, setting audit checklists, and scheduling lead status pipelines.</p>
+          <button id="empty-add-btn" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>Add First Client</span>
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <!-- Right Column: Sidebar for Follow-ups Schedule & Priority Items -->
+    <aside class="sidebar-schedule">
+      <div class="schedule-card glass-card">
+        <div class="schedule-header">
+          <div class="title-with-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="section-icon">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <h3>Follow-up Reminders</h3>
+          </div>
+          <span class="notification-dot red-dot hidden" id="aside-reminder-dot"></span>
+        </div>
+        
+        <div class="schedule-list" id="schedule-list">
+          <!-- Dynamically populated follow-ups list -->
+        </div>
+      </div>
+
+      <!-- Quick Tips Card -->
+      <div class="tips-card glass-card">
+        <h4>CRM Overview</h4>
+        <p class="tips-sub">Quick shortcuts:</p>
+        <ul class="tips-list">
+          <li><strong>CSV Export</strong> downloads all client records as spreadsheet.</li>
+          <li><strong>CSV Import</strong> merges new leads directly with local records.</li>
+          <li>Click <strong>View</strong> to edit audit lists, priority tags, and record timeline histories.</li>
+        </ul>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Floating Add Client Button (Visible on Mobile) -->
+  <button id="floating-add-btn" class="floating-add-btn" title="Add Client">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+    </svg>
+  </button>
+
+  <!-- ========================================== -->
+  <!-- MODAL: ADD / EDIT CLIENT FORM              -->
+  <!-- ========================================== -->
+  <div class="modal-backdrop hidden" id="client-modal">
+    <div class="modal-card slide-up-animation">
+      <div class="modal-header">
+        <h3 id="modal-title">Add New Client</h3>
+        <button id="modal-close-btn" class="modal-close">&times;</button>
+      </div>
+      <form id="client-form" class="modal-form">
+        <input type="hidden" id="client-id">
+        
+        <div class="form-tabs">
+          <button type="button" class="tab-btn active" data-tab="tab-general">General Info & Status</button>
+          <button type="button" class="tab-btn" data-tab="tab-audit">Audits & Reports</button>
+        </div>
+
+        <!-- Tab 1: General Info -->
+        <div class="tab-pane active" id="tab-general">
+          <div class="form-grid">
+            <div class="form-group col-span-2">
+              <label for="client-name" class="required-field">Client / Business Name</label>
+              <input type="text" id="client-name" placeholder="e.g. Apex Dental Solutions" required>
+            </div>
+
+            <div class="form-group">
+              <label for="business-type">Business Type</label>
+              <input type="text" id="business-type" placeholder="e.g. Healthcare, Dentist, SaaS">
+            </div>
+
+            <div class="form-group">
+              <label for="lead-status">Lead Status</label>
+              <select id="lead-status" required>
+                <option value="Cold Lead">Cold Lead</option>
+                <option value="Warm Lead" selected>Warm Lead</option>
+                <option value="Hot Lead">Hot Lead</option>
+                <option value="Interested">Interested</option>
+                <option value="Follow Up Needed">Follow Up Needed</option>
+                <option value="Meeting Scheduled">Meeting Scheduled</option>
+                <option value="Proposal Sent">Proposal Sent</option>
+                <option value="Negotiation">Negotiation</option>
+                <option value="Client Won">Client Won</option>
+                <option value="Client Lost">Client Lost</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="phone-number">Phone Number</label>
+              <input type="tel" id="phone-number" placeholder="e.g. +1 555-0199">
+            </div>
+
+            <div class="form-group">
+              <label for="email-address">Email Address</label>
+              <input type="email" id="email-address" placeholder="e.g. contact@business.com">
+            </div>
+
+            <div class="form-group">
+              <label for="website-url">Website URL</label>
+              <input type="url" id="website-url" placeholder="e.g. https://www.website.com">
+            </div>
+
+            <div class="form-group">
+              <label for="instagram-link">Instagram Link</label>
+              <input type="url" id="instagram-link" placeholder="e.g. https://instagram.com/user">
+            </div>
+
+            <div class="form-group col-span-2">
+              <label for="facebook-link">Facebook Link</label>
+              <input type="url" id="facebook-link" placeholder="e.g. https://facebook.com/page">
+            </div>
+
+            <div class="form-group">
+              <label for="follow-up-date" class="required-field">Next Follow-Up Date</label>
+              <input type="date" id="follow-up-date" required>
+            </div>
+
+            <div class="form-group">
+              <label for="priority-level">Priority Level</label>
+              <select id="priority-level">
+                <option value="Low">Low</option>
+                <option value="Medium" selected>Medium</option>
+                <option value="High">High</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Audits & Reports -->
+        <div class="tab-pane" id="tab-audit">
+          <div class="form-grid">
+            
+            <!-- Custom Searchable Dropdown for Website Status -->
+            <div class="form-group col-span-2 searchable-dropdown-group" id="web-dropdown-container">
+              <label for="web-status-search">Website Audit Status</label>
+              <div class="custom-select-box">
+                <input type="text" id="web-status-search" class="searchable-dropdown-input" placeholder="Search status or type custom value..." autocomplete="off">
+                <div class="dropdown-chevron">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+                <ul class="dropdown-options-list hidden" id="web-options-list">
+                  <!-- JS filled -->
+                </ul>
+              </div>
+            </div>
+
+            <!-- Custom Searchable Dropdown for Social Media Status -->
+            <div class="form-group col-span-2 searchable-dropdown-group" id="social-dropdown-container">
+              <label for="social-status-search">Social Media Audit Status</label>
+              <div class="custom-select-box">
+                <input type="text" id="social-status-search" class="searchable-dropdown-input" placeholder="Search status or type custom value..." autocomplete="off">
+                <div class="dropdown-chevron">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+                <ul class="dropdown-options-list hidden" id="social-options-list">
+                  <!-- JS filled -->
+                </ul>
+              </div>
+            </div>
+
+            <div class="form-group col-span-2">
+              <label for="audit-report">Audit Overview & Report</label>
+              <textarea id="audit-report" rows="3" placeholder="Identify issues found during quick audit (e.g. missing pixel, SSL invalid, visual design issues)..."></textarea>
+            </div>
+
+            <div class="form-group col-span-2">
+              <label for="pain-points">Client Pain Points</label>
+              <textarea id="pain-points" rows="2" placeholder="e.g. Getting no calls from organic searches, outdated brand, slow website..."></textarea>
+            </div>
+
+            <div class="form-group col-span-2">
+              <label for="recommended-services">Recommended Marketing Services</label>
+              <textarea id="recommended-services" rows="2" placeholder="e.g. Website redesign, local SEO setup, Google Ads campaign..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="budget-notes">Budget Notes ($)</label>
+              <input type="text" id="budget-notes" placeholder="e.g. $1,500/mo or $3k project">
+            </div>
+
+            <div class="form-group col-span-2">
+              <label for="notes">Internal Notes & History</label>
+              <textarea id="notes" rows="3" placeholder="Add custom notes, cold call answers, interaction summaries..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="modal-cancel-btn" class="btn btn-secondary-outline">Cancel</button>
+          <button type="submit" id="save-client-btn" class="btn btn-accent">Save Record</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: CLIENT DETAILS (VIEW PAGE)          -->
+  <!-- ========================================== -->
+  <div class="modal-backdrop hidden" id="detail-modal">
+    <div class="modal-card view-modal-card slide-up-animation">
+      <div class="modal-header">
+        <div class="view-header-title">
+          <h2 id="view-client-name">Client Name</h2>
+          <div class="view-badges">
+            <span id="view-business-badge" class="badge">Healthcare</span>
+            <span id="view-lead-badge" class="badge badge-lead">Hot Lead</span>
+            <span id="view-priority-badge" class="badge badge-priority">High Priority</span>
+          </div>
+        </div>
+        <button id="detail-close-btn" class="modal-close">&times;</button>
+      </div>
+
+      <div class="view-modal-layout">
+        <!-- Details Left Panel (Audits & Pain Points) -->
+        <div class="view-details-main">
+          
+          <!-- Audits Grid -->
+          <div class="view-section-grid">
+            <div class="audit-block-card">
+              <div class="block-header">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="block-icon web-icon">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+                <h4>Website Audit</h4>
+              </div>
+              <div class="block-content">
+                <span class="status-indicator-label" id="view-web-status">Predefined Status</span>
+                <p id="view-web-report" class="text-description-sec">No report summary logged.</p>
+              </div>
+            </div>
+
+            <div class="audit-block-card">
+              <div class="block-header">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="block-icon social-icon">
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                </svg>
+                <h4>Social Media Audit</h4>
+              </div>
+              <div class="block-content">
+                <span class="status-indicator-label" id="view-social-status">Predefined Status</span>
+                <p id="view-social-report" class="text-description-sec">No social metrics logged.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Analysis Block -->
+          <div class="analysis-block glass-card">
+            <h4>Agency Audit Report</h4>
+            
+            <div class="report-row">
+              <h5>Pain Points Identified</h5>
+              <p id="view-pain-points">None recorded.</p>
+            </div>
+            
+            <div class="report-row">
+              <h5>Recommended Marketing Services</h5>
+              <p id="view-recommended">None recorded.</p>
+            </div>
+
+            <div class="report-row-grid">
+              <div>
+                <h5>Estimated Budget Notes</h5>
+                <p id="view-budget">Not specified</p>
+              </div>
+              <div>
+                <h5>Added to CRM</h5>
+                <p id="view-date-added">YYYY-MM-DD</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notes -->
+          <div class="notes-block glass-card">
+            <h4>Detailed Notes & Comments</h4>
+            <p id="view-detailed-notes" class="pre-wrap-text">No notes captured.</p>
+          </div>
+        </div>
+
+        <!-- Details Right Panel (Contacts & Timeline) -->
+        <div class="view-details-sidebar">
+          
+          <!-- Contact Widget -->
+          <div class="widget-card contact-widget">
+            <h4>Contact Details</h4>
+            <div class="contact-links-list">
+              <div class="contact-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <span id="view-phone">No phone</span>
+              </div>
+              <div class="contact-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                <span id="view-email">No email</span>
+              </div>
+            </div>
+
+            <div class="contact-social-row">
+              <a href="#" id="view-web-link" target="_blank" class="social-btn" title="Website URL">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              </a>
+              <a href="#" id="view-instagram-link" target="_blank" class="social-btn" title="Instagram Profile">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+              </a>
+              <a href="#" id="view-facebook-link" target="_blank" class="social-btn" title="Facebook Page">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Follow up Widget -->
+          <div class="widget-card followup-widget">
+            <h4>Follow-up Scheduling</h4>
+            <div class="followup-info-card">
+              <span class="info-label">Next Scheduled Date</span>
+              <div class="followup-date-display">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="calendar-icon"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                <strong id="view-followup-date">YYYY-MM-DD</strong>
+              </div>
+              <span id="view-followup-badge" class="badge">Due Today</span>
+            </div>
+
+            <!-- Complete/Log Follow-up Form -->
+            <div class="log-followup-box">
+              <h5>Log Action / Progress</h5>
+              <div class="log-input-group">
+                <input type="text" id="followup-log-input" placeholder="e.g. Sent email pitch or Called but no answer...">
+                <button id="log-followup-btn" class="btn btn-accent btn-sm">Log</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline Widget -->
+          <div class="widget-card timeline-widget">
+            <h4>Follow-up & Activity History</h4>
+            <div class="timeline" id="timeline-container">
+              <!-- JS Filled -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="modal-footer view-modal-footer">
+        <button id="view-edit-btn" class="btn btn-accent">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+          <span>Edit Client Details</span>
+        </button>
+        <button id="view-close-btn" class="btn btn-secondary-outline">Close View</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
